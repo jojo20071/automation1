@@ -3,9 +3,7 @@ from flask import request
 import json
 import os
 
-import arcadeApi 
 
-api = ArcadeApi(user_id="U07B1MK6MAQ", save=True, debug=False)
 
 
 app = Flask(__name__)
@@ -17,7 +15,6 @@ app = Flask(__name__)
 
 @app.route('/homescreen', methods=['GET'])
 def home():
-    api.start_session("My Arcade Session")
     return("Homescreen :) startet")
 
 
