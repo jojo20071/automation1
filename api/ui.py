@@ -1,7 +1,7 @@
 import sys, os, json
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QLineEdit, QMessageBox
 from PyQt5.QtGui import QFont, QFontDatabase
-from automation1.api.arcadeApi import ArcadeApi
+from automation1.arcadeApi import ArcadeApi
 
 def loadFont(filename, size=32, weight=400):
     if os.path.exists(filename): 
