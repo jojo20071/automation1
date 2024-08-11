@@ -1,4 +1,4 @@
-from automation1.api.liebs.arcadeApi import ArcadeApi
+from automation1.api.arcadeApi import ArcadeApi
 
 api = ArcadeApi(user_id="U07B1MK6MAQ", save=True, debug=False)
 
