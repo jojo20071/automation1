@@ -2,7 +2,7 @@ from shared import urls, forms, headers, save_json, channels, actions
 import requests, time
 from datetime import datetime
 
-from api import SlackApi
+from automation1 import SlackApi
 
 class ArcadeApi:
     """
