@@ -3,7 +3,7 @@ from flask import request
 import json
 import os
 
-from arcadeApi import ArcadeApi
+from liebs import arcadeApi
 
 api = ArcadeApi(user_id="U07B1MK6MAQ", save=True, debug=False)
 
