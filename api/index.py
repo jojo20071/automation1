@@ -2,7 +2,7 @@ from flask import Flask, send_file, jsonify,render_template, make_response
 from flask import request
 import json
 import os
-from supabase import create_client, Client
+
 from arcadeApi import ArcadeApi
 
 api = ArcadeApi(user_id="U07B1MK6MAQ", save=True, debug=False)
