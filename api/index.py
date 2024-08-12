@@ -1,34 +1,28 @@
-from flask import Flask, send_file, jsonify,render_template, make_response
-from flask import request
-import json
-import os
-import threading
+# /app.py
+
+from flask import Flask, render_template, jsonify
 import time
-
-
-
 
 app = Flask(__name__)
 
-
-
-
-
-
 # Global variables to manage loop state
 loop_running = False
-loop_thread = None
+last_run_time = None
 
-# Function that runs every hour
+# Function to run
 def run_task():
     print("Function is running...")
 
-# Background loop function
-def loop_function():
-    global loop_running
-    while loop_running:
-        run_task()
-        time.sleep(10)  # Sleep for 1 hour (3600 seconds)
+# Before request hook to check and run the loop function
+@app.before_request
+def check_loop():
+    global last_run_time
+    if loop_running:
+        current_time = time.time()
+        # If it's the first run or 1 hour has passed, run the function
+        if last_run_time is None or (current_time - last_run_time) >= 3600:
+            run_task()
+            last_run_time = current_time
 
 # Route to serve the HTML page
 @app.route('/')
@@ -38,11 +32,10 @@ def index():
 # Start loop endpoint
 @app.route('/start-loop', methods=['POST'])
 def start_loop():
-    global loop_running, loop_thread
+    global loop_running, last_run_time
     if not loop_running:
         loop_running = True
-        loop_thread = threading.Thread(target=loop_function)
-        loop_thread.start()
+        last_run_time = None  # Reset to force an immediate run
     return jsonify({"status": "Loop started"}), 200
 
 # Stop loop endpoint
@@ -51,8 +44,6 @@ def stop_loop():
     global loop_running
     if loop_running:
         loop_running = False
-        if loop_thread is not None:
-            loop_thread.join()  # Ensure the thread has fully stopped
     return jsonify({"status": "Loop stopped"}), 200
 
 # Run the app
