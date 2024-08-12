@@ -15,7 +15,7 @@ name = 1
 
 @app.route('/homescreen', methods=['GET'])
 def home():
-    return name
+    return str(name)
 
 @app.route('/1', methods=['GET'])
 def d():
