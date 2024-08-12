@@ -20,7 +20,7 @@ def check_loop():
     if loop_running:
         current_time = time.time()
         # If it's the first run or 1 hour has passed, run the function
-        if last_run_time is None or (current_time - last_run_time) >= 3600:
+        if last_run_time is None or (current_time - last_run_time) >= 30:
             run_task()
             last_run_time = current_time
 
