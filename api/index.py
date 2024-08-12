@@ -14,15 +14,20 @@ app = Flask(__name__)
 
 name = 1
 
-@app.route('/homescreen', methods=['GET'])
-def home():
+def timestuf():
     start_time = time.time()
     running = True
     while running:
         current_time = time.time()
         elapsed_time = current_time - start_time
         if elapsed_time >= 10:
+            print(start_time+"   "+elapsed_time)
             running = False
+
+
+@app.route('/homescreen', methods=['GET'])
+def home():
+    timestuf()
     return "10 seconds have passed"
 
 
