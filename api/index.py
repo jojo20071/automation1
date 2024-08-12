@@ -1,27 +1,30 @@
-# /app.py
-
-from flask import Flask, render_template, jsonify
-import time
+from flask import Flask, request, jsonify
 import threading
+import time
 
 app = Flask(__name__)
 
-
-
-
-
-def print_with_delay(message, delay):
-    threading.Timer(delay, print, [message]).start()
+def run_periodically(n, interval, task_func):
+    def task_runner():
+        for _ in range(n):
+            task_func()
+            time.sleep(interval)
     
-@app.route('/')
-def home():
-    # Print messages with delays
-    print("hi1")
-    print("hi2")
-    print_with_delay("hi3 after 5 sec", 5)
-    print_with_delay("hi3 after 20 sec", 20)
-    print_with_delay("hi3 after 2 min", 120)
+    thread = threading.Thread(target=task_runner)
+    thread.start()
+
+def example_task():
+    print("Task executed")
+
+@app.route('/start_task', methods=['POST'])
+def start_task():
+    data = request.get_json()
+    n = data.get('n', 5)  # Default to running 5 times if not specified
+    interval = 10  # Run every 10 seconds
+
+    run_periodically(n, interval, example_task)
     
-    return "Messages are being printed with delays!"
+    return jsonify({"status": "Task started", "n": n, "interval": interval})
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
