@@ -1,29 +1,25 @@
-from flask import Flask
-import threading
-import time
+from flask import Flask, send_file, jsonify,render_template, make_response
+from flask import request
+import json
+import os
+
+
+
 
 app = Flask(__name__)
 
-def run_periodically(n, interval, task_func):
-    def task_runner():
-        for _ in range(n):
-            task_func()
-            time.sleep(interval)
-    
-    thread = threading.Thread(target=task_runner)
-    thread.start()
 
-def example_task():
-    print("Task executed")
 
-@app.route('/')
+
+name = 1
+
+@app.route('/homescreen', methods=['GET'])
 def home():
-    return "The task is running in the background!"
+    return name
 
-if __name__ == '__main__':
-    n = 5  # Number of times to run the task
-    interval = 10  # Interval of 10 seconds
+@app.route('/1', methods=['GET'])
+def d():
+    name = 2
+    return "set to 2"
 
-    run_periodically(n, interval, example_task)
-    
-    app.run(debug=True)
+
