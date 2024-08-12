@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 import threading
 import time
 
@@ -16,15 +16,14 @@ def run_periodically(n, interval, task_func):
 def example_task():
     print("Task executed")
 
-@app.route('/start_task', methods=['POST'])
-def start_task():
-    data = request.get_json()
-    n = data.get('n', 5)  # Default to running 5 times if not specified
-    interval = 10  # Run every 10 seconds
+@app.route('/')
+def home():
+    return "The task is running in the background!"
+
+if __name__ == '__main__':
+    n = 5  # Number of times to run the task
+    interval = 10  # Interval of 10 seconds
 
     run_periodically(n, interval, example_task)
     
-    return jsonify({"status": "Task started", "n": n, "interval": interval})
-
-if __name__ == '__main__':
     app.run(debug=True)
