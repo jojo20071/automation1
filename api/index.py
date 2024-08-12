@@ -13,39 +13,18 @@ last_run_time = None
 def run_task():
     print("Function is running...")
 
-# Before request hook to check and run the loop function
-@app.before_request
-def check_loop():
-    global last_run_time
-    if loop_running:
-        current_time = time.time()
-        # If it's the first run or 1 hour has passed, run the function
-        if last_run_time is None or (current_time - last_run_time) >= 30:
-            run_task()
-            last_run_time = current_time
+print("hi1")
+print("hi2")
+time.sleep(5)
+print("hi3 after 5 sec")
+time.sleep(20)
+print("hi3 after 20 sec")
+time.sleep(120)
+print("hi3 after 2 min")
+
 
 # Route to serve the HTML page
 @app.route('/')
 def index():
     return render_template('index.html', loop_running=loop_running)
 
-# Start loop endpoint
-@app.route('/start-loop', methods=['POST'])
-def start_loop():
-    global loop_running, last_run_time
-    if not loop_running:
-        loop_running = True
-        last_run_time = None  # Reset to force an immediate run
-    return jsonify({"status": "Loop started"}), 200
-
-# Stop loop endpoint
-@app.route('/stop-loop', methods=['POST'])
-def stop_loop():
-    global loop_running
-    if loop_running:
-        loop_running = False
-    return jsonify({"status": "Loop stopped"}), 200
-
-# Run the app
-if __name__ == '__main__':
-    app.run()
