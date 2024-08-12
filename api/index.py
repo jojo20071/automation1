@@ -25,36 +25,22 @@ def start_session(slack_id, work, api_key):
     response = requests.post(url, json=data, headers=headers)
     return response.json()
 
-name = 1
-
-def timestuf():
-    start_time = time.time()
-    running = True
-    while running:
-        current_time = time.time()
-        elapsed_time = current_time - start_time
-        if elapsed_time >= 10:
-            print(start_time+"   "+elapsed_time)
-            running = False
 
 
-@app.route('/homescreen', methods=['GET'])
+
+@app.route('/', methods=['GET'])
 def home():
-    return "10 seconds have passed"
-    timestuf()
+    return "hi"
+
     
 
-
-@app.route('/1', methods=['GET'])
-def d():
-    name = 2
-    return "set to 2"
 
 @app.route('/start', methods=['GET'])
 def start():
     api_key = "55ef9bc4-cb2d-484e-9062-ca055761e82b"
     slack_id = "user_slack_id"
-    start_session(slack_id, "BS", api_key)
+    use = request.args.get('use', '')   
+    start_session(slack_id, use, api_key)
     return "startet"
 
 
