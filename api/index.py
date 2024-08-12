@@ -28,7 +28,7 @@ def loop_function():
     global loop_running
     while loop_running:
         run_task()
-        time.sleep(3600)  # Sleep for 1 hour (3600 seconds)
+        time.sleep(10)  # Sleep for 1 hour (3600 seconds)
 
 # Route to serve the HTML page
 @app.route('/')
