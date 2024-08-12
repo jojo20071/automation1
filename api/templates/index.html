@@ -1,0 +1,33 @@
+<!-- /templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop Control</title>
+    <script>
+        function updateStatus() {
+            const statusElement = document.getElementById('status');
+            statusElement.innerHTML = "{{ 'Running' if loop_running else 'Stopped' }}";
+        }
+
+        function sendRequest(endpoint) {
+            fetch(endpoint, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                updateStatus();
+            });
+        }
+    </script>
+</head>
+<body onload="updateStatus()">
+    <h1>Loop Control</h1>
+    <p>Loop is currently: <span id="status"></span></p>
+    <button onclick="sendRequest('/start-loop')">Start Loop</button>
+    <button onclick="sendRequest('/stop-loop')">Stop Loop</button>
+</body>
+</html>w
