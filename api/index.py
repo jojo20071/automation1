@@ -19,8 +19,5 @@ print_with_delay("hi3 after 5 sec", 5)
 print_with_delay("hi3 after 20 sec", 20)
 print_with_delay("hi3 after 2 min", 120)
 
-# Route to serve the HTML page
-@app.route('/')
-def index():
-    return render_template('index.html', loop_running=loop_running)
+
 
