@@ -39,7 +39,7 @@ def home():
 def start():
     api_key = "55ef9bc4-cb2d-484e-9062-ca055761e82b"
     slack_id = "user_slack_id"
-    use = request.args.get('use', '')   
+    use = request.args.get('use', 'BS')   
     
     return start_session(slack_id, use, api_key)
 
